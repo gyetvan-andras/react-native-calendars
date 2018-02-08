@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
   FlatList,
   ActivityIndicator,
-  View
+  View, Text
 } from 'react-native';
 import Reservation from './reservation';
 import PropTypes from 'prop-types';
@@ -176,8 +176,14 @@ class ReactComp extends Component {
 
     return {reservations, scrollPosition};
   }
-
   render() {
+		return (
+			<View> 
+				<Text>Events goes here</Text>
+			</View>
+		)
+	}
+  _render() {
     if (!this.props.reservations || !this.props.reservations[this.props.selectedDay.toString('yyyy-MM-dd')]) {
       if (this.props.renderEmptyData) {
         return this.props.renderEmptyData();
