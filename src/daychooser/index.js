@@ -43,6 +43,7 @@ export default class DayChooserView extends Component {
     onDayPress: PropTypes.func,
     // callback that gets called when day changes while scrolling agenda list
     onDaychange: PropTypes.func,
+    renderReservations: PropTypes.func,
     // specify how each item should be rendered in agenda
     renderItem: PropTypes.func,
     // specify how each date should be rendered. day can be undefined if the item is not first in that day.
@@ -263,22 +264,26 @@ export default class DayChooserView extends Component {
   }
 
   renderReservations() {
-    return (
-      <ReservationsList
-        rowHasChanged={this.props.rowHasChanged}
-        renderItem={this.props.renderItem}
-        renderDay={this.props.renderDay}
-        renderEmptyDate={this.props.renderEmptyDate}
-        reservations={this.props.items}
-        selectedDay={this.state.selectedDay}
-        renderEmptyData = {this.props.renderEmptyData}
-        topDay={this.state.topDay}
-        onDayChange={this.onDayChange.bind(this)}
-        onScroll={() => {}}
-        ref={(c) => this.list = c}
-        theme={this.props.theme}
-      />
-    );
+		if(this.props.renderReservations) {
+			return this.props.renderReservations()
+		} else {
+			return (
+				<ReservationsList
+					rowHasChanged={this.props.rowHasChanged}
+					renderItem={this.props.renderItem}
+					renderDay={this.props.renderDay}
+					renderEmptyDate={this.props.renderEmptyDate}
+					reservations={this.props.items}
+					selectedDay={this.state.selectedDay}
+					renderEmptyData = {this.props.renderEmptyData}
+					topDay={this.state.topDay}
+					onDayChange={this.onDayChange.bind(this)}
+					onScroll={() => {}}
+					ref={(c) => this.list = c}
+					theme={this.props.theme}
+				/>
+			);
+		}
   }
 
   onDayChange(day) {

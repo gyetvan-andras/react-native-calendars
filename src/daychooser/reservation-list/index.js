@@ -175,15 +175,9 @@ class ReactComp extends Component {
     }
 
     return {reservations, scrollPosition};
-  }
-  render() {
-		return (
-			<View> 
-				<Text>Events goes here</Text>
-			</View>
-		)
 	}
-  _render() {
+	
+  render() {
     if (!this.props.reservations || !this.props.reservations[this.props.selectedDay.toString('yyyy-MM-dd')]) {
       if (this.props.renderEmptyData) {
         return this.props.renderEmptyData();
