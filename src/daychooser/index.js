@@ -211,7 +211,9 @@ export default class DayChooserView extends Component {
     if (props.items) {
       this.setState({
         firstResevationLoad: false
-      });
+			});
+		} else if(props.selected) {
+			this._scrollToDay(props.selected, !this.state.calendarScrollable);
     } else {
       this.loadReservations(props);
     }
@@ -238,6 +240,27 @@ export default class DayChooserView extends Component {
   _chooseDayFromCalendar(d) {
     this.chooseDay(d, !this.state.calendarScrollable);
   }
+
+	_scrollToDay = (d, optimisticScroll) => {
+    const day = parseDate(d);
+    this.setState({
+      calendarScrollable: false,
+      selectedDay: day.clone()
+    });
+    if (this.props.onCalendarToggled) {
+      this.props.onCalendarToggled(false);
+    }
+    if (!optimisticScroll) {
+      this.setState({
+        topDay: day.clone()
+      });
+    }
+    this.setScrollPadPosition(this.initialScrollPadPosition(), true);
+    this.calendar.scrollToDay(day, this.calendarOffset(), true);
+    if (this.props.loadItemsForMonth) {
+      this.props.loadItemsForMonth(xdateToData(day));
+    }
+	}
 
   chooseDay(d, optimisticScroll) {
     const day = parseDate(d);
